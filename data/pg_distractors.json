@@ -1,0 +1,18 @@
+{
+    "distractor_0": {
+        "distractor": "The best writing tip I received from my college professor was to write everyday.",
+        "rewrite_for_analysis": "write everyday"
+    },
+    "distractor_1": {
+        "distractor": "The worst writing advice I got from my college classmate was to write each essay in five different styles.",
+        "rewrite_for_analysis": "write each essay in five different styles"
+    },
+    "distractor_2": {
+        "distractor": "The best writing advice I got from my classmate was to write each essay in three different styles, this was back in high school.",
+        "rewrite_for_analysis": "write each essay in three different styles"
+    },
+    "distractor_3": {
+        "distractor": "I thought the best writing advice I got from my college classmate was to write each essay in four different styles, but not anymore.",
+        "rewrite_for_analysis": "write each essay in four different styles"
+    }
+}
