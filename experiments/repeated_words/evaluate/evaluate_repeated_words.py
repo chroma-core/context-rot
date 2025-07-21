@@ -44,6 +44,7 @@ def check_correct_position(row: pd.Series, modified_word: str, output_column: st
         gold_index = row["gold"].index(unique_word)
         output_index = row[output_column].index(unique_word)
         return gold_index == output_index
+    
     except ValueError:
         return False
 
@@ -59,7 +60,7 @@ def other_word_exists(output: str, common_word: str, modified_word: str) -> bool
     
     return False
 
-def filter_refusals(df: pd.DataFrame, common_word: str, modified_word: str, output_column: str):
+def filter_refusals(df: pd.DataFrame, common_word: str, modified_word: str, output_column: str) -> pd.DataFrame | None:
     other_word_present_list = []
     
     for i, row in df.iterrows():
@@ -76,7 +77,7 @@ def filter_refusals(df: pd.DataFrame, common_word: str, modified_word: str, outp
         df_refusals = other_word_df[
             (pd.isna(other_word_df[output_column])) | 
             (other_word_df[output_column].str.count(common_word) < 15)
-        ]
+        ] # good initial filter, but manual check is still highly recommended
     else:
         df_refusals = other_word_df
     
@@ -85,7 +86,7 @@ def filter_refusals(df: pd.DataFrame, common_word: str, modified_word: str, outp
     return df_refusals if len(df_refusals) > 0 else None
 
 def create_binned_plot(df: pd.DataFrame, unique_num_words: list[int], metric_column: str, 
-                      ylabel: str, title: str, color: str, output_path: str):
+                      ylabel: str, title: str, color: str, output_path: str) -> None:
     fig, axes = plt.subplots(4, 3, figsize=(15, 12))
     axes = axes.flatten()
     
@@ -146,7 +147,7 @@ def create_binned_plot(df: pd.DataFrame, unique_num_words: list[int], metric_col
     plt.close()
 
 def create_token_count_plot(df: pd.DataFrame, model_name: str, common_word: str, 
-                           modified_word: str, output_path: str):
+                           modified_word: str, output_path: str) -> None:
     color = "#90B8B6"
     
     plt.figure(figsize=(10, 6))
@@ -177,7 +178,7 @@ def create_token_count_plot(df: pd.DataFrame, model_name: str, common_word: str,
     plt.close()
 
 def evaluate_repeated_words(input_path: str, output_dir: str, common_word: str, 
-                           modified_word: str, model_name: str):
+                           modified_word: str, model_name: str) -> tuple[pd.DataFrame, dict]:
     df = pd.read_csv(input_path)
     
     df["num_words"] = df["id"].str.split("_").str[0].astype(int)
